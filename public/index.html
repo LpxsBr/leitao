@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: Helvetica;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100vh;
+        }
+        .status-container{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(rgb(208, 148, 208), rgb(123, 123, 197));
+            border-radius: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        Last update at: <span id="timer"></span>
+        <br>
+        <div class="status-container">
+            <div class="card-container">
+                <h4>Name: <span id="name"></span></h4>
+            </div>
+
+            <div class="card-container">
+                <label>Total Memory:</label>
+                <span id="total-memory">Null</span>
+            </div>
+
+            <div class="card-container">
+                <label>Used Memory:</label>
+                <span id="used-memory">Null</span>
+            </div>
+
+            <div class="card-container">
+                <label>Free Memory:</label>
+                <span id="free-memory">Null</span>
+            </div>
+        </div>
+
+    </main>
+</body>
+<script>
+
+    const dt = new Date()
+    let i = 1
+
+    const host = fetch('http://localhost:8000/app/host')
+
+    host
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('name').innerHTML = data.msg
+        })
+        .catch(err => console.log(err))
+
+
+    setInterval(() => {
+
+        const dt = new Date()
+        document.getElementById('timer').innerHTML = dt.toString()
+        {
+            const memory = fetch('http://localhost:8000/app/memory')
+            memory
+                .then((res) => res.json())
+                .then((data) => {
+                    // console.log(data.msg)
+                    document.getElementById('total-memory').innerHTML = Number(data.total).toFixed(2) + " GB"
+                })
+                .catch((err) => console.log(err))
+        }
+        {
+            const memory = fetch('http://localhost:8000/app/memory')
+            memory
+                .then((res) => res.json())
+                .then((data) => {
+                    // console.log(data.msg)
+                    document.getElementById('used-memory').innerHTML = Number(data.used).toFixed(2) + " GB"
+                })
+                .catch((err) => console.log(err))
+        }
+        {
+            const memory = fetch('http://localhost:8000/app/memory')
+            memory
+                .then((res) => res.json())
+                .then((data) => {
+                    // console.log(data.msg)
+                    document.getElementById('free-memory').innerHTML = Number(data.free).toFixed(2) + " GB"
+                })
+                .catch((err) => console.log(err))
+        }
+    }, 1000)
+
+</script>
+
+</html>
