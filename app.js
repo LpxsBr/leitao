@@ -26,7 +26,7 @@ app.get('/app/memory',
         res.status(200).json(
             {
                 total: String(getTotalSpace() / 1024 / 1024 / 1024),
-                total: String(getUsedSpace() / 1024 / 1024 / 1024),
+                used: String(getUsedSpace() / 1024 / 1024 / 1024),
                 free: String(getFreeSpace() / 1024 / 1024 / 1024)
             }
         )
