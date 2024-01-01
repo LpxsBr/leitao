@@ -67,7 +67,7 @@
     const dt = new Date()
     let i = 1
 
-    const host = fetch('http://localhost:8000/app/host')
+    const host = fetch('https://leitao-ten.vercel.app/app/host')
 
     host
         .then(res => res.json())
@@ -82,7 +82,7 @@
         const dt = new Date()
         document.getElementById('timer').innerHTML = dt.toString()
         {
-            const memory = fetch('http://localhost:8000/app/memory')
+            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -92,7 +92,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch('http://localhost:8000/app/memory')
+            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -102,7 +102,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch('http://localhost:8000/app/memory')
+            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
             memory
                 .then((res) => res.json())
                 .then((data) => {
