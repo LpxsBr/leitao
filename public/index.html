@@ -133,7 +133,7 @@
     const dt = new Date()
     let i = 1
 
-    const host = fetch(`${url}/app/host`)
+    const host = fetch(`https://leitao-ten.vercel.app/app/host`)
 
     host
         .then(res => res.json())
@@ -142,13 +142,11 @@
         })
         .catch(err => console.log(err))
 
-
     const loadInfoHandler = () => {
-        let url = 'https://leitao-ten.vercel.app';
         const dt = new Date()
         document.getElementById('timer').innerHTML = dt.toString()
         {
-            const memory = fetch(`${url}/app/memory`)
+            const memory = fetch(`https://leitao-ten.vercel.app/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -158,7 +156,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch(`${url}/app/memory`)
+            const memory = fetch(`https://leitao-ten.vercel.app/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -168,7 +166,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch(`${url}/app/memory`)
+            const memory = fetch(`https://leitao-ten.vercel.app/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -178,7 +176,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const machine = fetch(`${url}/app/machine`)
+            const machine = fetch(`https://leitao-ten.vercel.app/app/machine`)
 
             machine
                 .then(res => res.json())
