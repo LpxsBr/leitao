@@ -6,40 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M</title>
     <style>
-        *{
+        * {
             box-sizing: border-box;
             padding: 0;
             margin: 0;
             font-family: Helvetica;
         }
-        body{
+
+        body {
             display: flex;
             flex-direction: column;
             gap: 20px;
             height: 100vh;
         }
-        .status-container{
+
+        .information-container {
+            height: 30%;
             display: flex;
+            flex-direction: column;
             justify-content: space-evenly;
+            align-items: center;
         }
+
+        @media (min-width: 829px) {
+            .information-container {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .information-container>.card-container {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
         .card-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 200px;
-            height: 200px;
+            height: 100px;
             background: linear-gradient(rgb(208, 148, 208), rgb(123, 123, 197));
             border-radius: 16px;
+        }
+
+        .list-item {
+            height: 100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 0px 50px;
+            background: linear-gradient(rgb(208, 148, 208), rgb(123, 123, 197));
+            border-radius: 16px;
+        }
+
+        #list-data-system-information{
+            padding: 10px;
+        }
+
+        .list-item>.other {
+            display: flex;
+            width: 300px;
+            justify-content: flex-start;
+            gap: 200px;
+        }
+
+        .list-item>.other p {
+            display: flex;
+            flex-wrap: nowrap;
+            /* width: 00px; */
         }
     </style>
 </head>
 
 <body>
     <main>
-        Last update at: <span id="timer"></span>
-        <br>
         <div class="status-container">
+            <p>
+                Last update at: <span id="timer"></span>
+            </p>
+        </div>
+
+        <div class="information-container">
             <div class="card-container">
                 <h4>Name: <span id="name"></span></h4>
             </div>
@@ -59,15 +110,30 @@
                 <span id="free-memory">Null</span>
             </div>
         </div>
-
+        <div class="machine-container">
+            <div class="card-container">
+                <span id="system-platform">Null</span>
+            </div>
+            <div id="list-data-system-information">
+                <!-- <div class="list-item">
+                    <h2 id="sys-model">Model</h2>
+                    <div class="other">
+                        <p>Speed: <span id="sys-speed">Speend</span></p>
+                        <p>User usage: <span id="user-usage">UserUsage</span></p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
     </main>
 </body>
 <script>
 
+    const eventss = (event) => console.log(event.target.value)
+
     const dt = new Date()
     let i = 1
 
-    const host = fetch('https://leitao-ten.vercel.app/app/host')
+    const host = fetch(`${url}/app/host`)
 
     host
         .then(res => res.json())
@@ -77,12 +143,12 @@
         .catch(err => console.log(err))
 
 
-    setInterval(() => {
-
+    const loadInfoHandler = () => {
+        const url = 'https://leitao-ten.vercel.app';
         const dt = new Date()
         document.getElementById('timer').innerHTML = dt.toString()
         {
-            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
+            const memory = fetch(`${url}/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -92,7 +158,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
+            const memory = fetch(`${url}/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -102,7 +168,7 @@
                 .catch((err) => console.log(err))
         }
         {
-            const memory = fetch('https://leitao-ten.vercel.app/app/memory')
+            const memory = fetch(`${url}/app/memory`)
             memory
                 .then((res) => res.json())
                 .then((data) => {
@@ -111,7 +177,36 @@
                 })
                 .catch((err) => console.log(err))
         }
-    }, 1000)
+        {
+            const machine = fetch(`${url}/app/machine`)
+
+            machine
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    document.getElementById('system-platform').innerHTML = data.platform
+
+
+                    document.getElementById('list-data-system-information').innerHTML = data.cpu.map((item) =>
+                        `
+                        <div class="list-item">
+                            <h2 id="sys-model">${item.model}</h2>
+                            <div class="other">
+                                <p>Speed: <span id="sys-speed">${item.speed}</span></p>
+                                <p>User usage: <span id="user-usage">${item.times.user}</span></p>
+                            </div>
+                        </div>
+                        `
+                    )
+
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    loadInfoHandler()
+
+    setInterval(loadInfoHandler, 1000)
 
 </script>
 
